@@ -114,7 +114,7 @@ class weatherStation {
 }
 
 
-class Observer {
+class Observer2 {
     public function update($tempeature) {
         echo "The current temperature is: " . $temperature . " degrees Celsius.<br>";
     }
@@ -123,8 +123,8 @@ class Observer {
 
 
 $weatherstation = new weatherStation();
-$observer  = new Observer();
-$observer2  = new Observer();
+$observer  = new Observer2();
+$observer2  = new Observer2();
 
 $weatherstation->registerObserver($observer);
 $weatherstation->registerObserver($observer2);
