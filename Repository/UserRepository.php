@@ -35,13 +35,23 @@ class UserRepository
         // For this example, we'll just add the user to our simulated data source.
         $this->users[] = $user;
     }
+
+    public function delete(User $user)
+    {
+        $query = "DELETE FROM users WHERE id = ?";
+        $statement = $this->connection->prepare($query);
+        $id = $user->getId();
+        $statement->bind_param("i", $id);
+        $statement->execute();
+    }
 }
 
 
 
 // index.php
 
-// Assuming you have already included the User and UserRepository classes.
+require_once 'User.php';
+require_once 'UserRepository.php';
 
 // Create a new UserRepository instance
 $userRepository = new UserRepository();
@@ -64,3 +74,12 @@ foreach ($users as $user) {
 // Save a new user
 $newUser = new User(3, 'New User', 'newuser@example.com');
 $userRepository->save($newUser);
+
+// Delete a user by ID (let's assume the user with ID 2 exists for this example)
+$userToDelete = $userRepository->getById(2);
+if ($userToDelete) {
+    $userRepository->delete($userToDelete);
+    echo "User with ID 2 deleted.";
+} else {
+    echo "User with ID 2 not found.";
+}
